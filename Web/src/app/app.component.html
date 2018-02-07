@@ -1,3 +1,15 @@
-<main>
-  <h1>Player</h1>
-</main>
+<div class="col-md-offset-4 ng-scope">
+  <h3 class="ng-binding">
+    {{music}}
+  </h3>
+</div>
+<div class="form-group col-md-8 col-md-offset-4 ng-scope">
+    <div class="form-group col-xs-9">
+      <button class="btn btn-primary" (click)="play()">Play</button>
+      <button class="btn btn-danger" (click)="stop()">Stop</button>
+      <button class="btn btn-neutral" (click)="next()">Next</button>
+    </div>
+    <div class="progress">
+        <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+</div>
