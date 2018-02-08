@@ -16,6 +16,9 @@ export class AppComponent {
   private status: string
   private statusClass: string
   private pos: number = 0;
+  private elapsedTime: string = "0:00";
+  private elapsedTime2: string;
+  private currentRate: number;
 
   private currentDuration: number
 
@@ -29,6 +32,7 @@ export class AppComponent {
     this.currentDuration = 0
     this.maxListenedDuration = 0;
     this.maxDuration = 0
+    this.currentRate = 1;
     this.sound = new Howl({
       src: playlist[index],
       html5: true,
@@ -37,11 +41,15 @@ export class AppComponent {
         this.music = playlist[index]
         this.maxDuration = Math.round(this.sound.duration(s))
         Observable.interval(1000).subscribe(() => {
-          var duration = Math.round(<number>this.sound.seek())
+          let duration = Math.round(<number>this.sound.seek())
+          console.info(duration)
           this.currentDuration = duration
-          this.maxListenedDuration = duration
-          console.info(this.formatTime(duration))
+          this.maxListenedDuration = duration > this.maxListenedDuration ? duration : this.maxListenedDuration
+          console.info(this.maxListenedDuration)
+          
+          this.setElapsedTime()
         })
+        this.setElapsedTime()
       },
       onseek: s => {
         console.info(this.sound.seek())
@@ -55,6 +63,11 @@ export class AppComponent {
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
+  setElapsedTime() {
+    this.elapsedTime = `(${this.formatTime(this.maxDuration - this.currentDuration)})`;
+    this.elapsedTime2 = `(${this.formatTime(this.currentDuration)} - ${this.formatTime(this.maxDuration)})`;
+  }
+
   toggle() {
     if (this.sound.playing())
       this.sound.pause();
@@ -63,22 +76,26 @@ export class AppComponent {
     this.status = this.sound.playing() ? "Pause" : "Play"
   }
 
-  next() {
-    if (this.pos >= this.playList.length) return;
+  submit(){
+     if (this.pos >= this.playList.length) this.pos = -1;
     this.pos++;
     if (this.sound.playing())
       this.sound.stop()
     this.playList(this.pos);
-    this.toggle();
+    this.toggle();  
+    this.status = "Pause"
+    this.sound.seek(this.currentDuration + 1)
+  }
+
+  next() {
+    let newTime = this.currentDuration + 5;
+    this.sound.seek(newTime > this.maxListenedDuration ? this.maxListenedDuration : newTime)
   }
 
   prev() {
-    if (this.pos <= 0) return;
-    this.pos--;
-    if (this.sound.playing())
-      this.sound.stop()
-    this.playList(this.pos);
-    this.toggle();
+    var seekPos = this.currentDuration - 5;
+
+    this.sound.seek(seekPos < 0 ? 0 : seekPos)
   }
 
   playNext() {
@@ -86,11 +103,8 @@ export class AppComponent {
   }
 
   seekChange() {
-
-    console.info(this.currentDuration);
-    console.info(this.maxListenedDuration);
-
-    this.sound.seek(this.currentDuration)
+    
+    this.sound.seek(this.currentDuration > this.maxListenedDuration ? this.maxListenedDuration : this.currentDuration)
   }
 
 }
