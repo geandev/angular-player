@@ -40,9 +40,19 @@ export class AppComponent {
           var duration = Math.round(<number>this.sound.seek())
           this.currentDuration = duration
           this.maxListenedDuration = duration
+          console.info(this.formatTime(duration))
         })
+      },
+      onseek: s => {
+        console.info(this.sound.seek())
       }
     })
+  }
+  formatTime(secs: number): string {
+    var minutes = Math.floor(secs / 60) || 0;
+    var seconds = (secs - minutes * 60) || 0;
+
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
   toggle() {
@@ -63,7 +73,7 @@ export class AppComponent {
   }
 
   prev() {
-    if (this.pos <= 0) return;    
+    if (this.pos <= 0) return;
     this.pos--;
     if (this.sound.playing())
       this.sound.stop()
@@ -76,7 +86,7 @@ export class AppComponent {
   }
 
   seekChange() {
-    
+
     console.info(this.currentDuration);
     console.info(this.maxListenedDuration);
 
