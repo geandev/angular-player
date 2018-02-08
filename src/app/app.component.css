@@ -41,3 +41,8 @@
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
+
+.btn.btn-control {
+    border-radius: 0px;
+    width: 75px;
+}
