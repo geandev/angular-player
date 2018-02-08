@@ -20,6 +20,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
+    "howler": "^2.0.8",
     "@types/howler": "^2.0.5",
     "@types/node": "^6.0.97",
     "angular2-template-loader": "^0.6.0",

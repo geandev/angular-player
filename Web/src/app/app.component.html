@@ -1,15 +1,14 @@
-<div class="col-md-offset-4 ng-scope">
-  <h3 class="ng-binding">
-    {{music}}
-  </h3>
-</div>
-<div class="form-group col-md-8 col-md-offset-4 ng-scope">
-    <div class="form-group col-xs-9">
-      <button class="btn btn-primary" (click)="play()">Play</button>
-      <button class="btn btn-danger" (click)="stop()">Stop</button>
-      <button class="btn btn-neutral" (click)="next()">Next</button>
-    </div>
-    <div class="progress">
-        <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-      </div>
-</div>
+<form class="form-signin">
+  <h1 class="h3 mb-3 font-weight-normal">Player</h1>
+  <div class="btn-group btn-group" role="group" aria-label="Large button group">
+    <button type="button" class="btn btn-success">Play</button>
+    <button type="button" class="btn btn-danger">Pause</button>
+    <button type="button" class="btn btn-secondary"><<</button>
+    <button type="button" class="btn btn-secondary">>></button>
+  </div>
+  <span class="badge badge-primary">Primary</span>
+  <hr>
+  <div class="slidecontainer">
+    <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
+  </div>
+</form>

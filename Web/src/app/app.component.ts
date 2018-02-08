@@ -10,7 +10,6 @@ import { sample } from 'rxjs/operator/sample';
 export class AppComponent {
   private sound: Howl
   private music: string
-  private currentPlaying: number
 
   constructor() {
     this.music = "froid.wav"
@@ -19,17 +18,12 @@ export class AppComponent {
       html5: true,
       format: ['wav']
     })
-    this.sound.on("play", (test) => console.info(test))
   }
 
-  play() {
-    this.currentPlaying = this.sound.play()
-    this.sound.on("seek", ()seek )
+  togglePlay() {
+    this.sound.play();
   }
 
-  next() {
-    this.sound.seek(this.sound.duration(this.currentPlaying))
-  }
   stop() {
     this.sound.pause()
   }
