@@ -1,19 +1,27 @@
 <form class="form-signin">
   <h1 class="h3 mb-3 font-weight-normal">
-    Player
+    Player - {{elapsedTime}}
+    <p>
+      <!-- #2 - {{elapsedTime2}} -->
+    </p>
     <small>
       <span class="badge badge-primary">{{music}}</span>
     </small>
   </h1>
   <div class="btn-group btn-group" role="group" aria-label="Large button group">
-    <button type="button" class="btn btn-control" (click)="prev()">Prev </button>
-    <button type="button" class="btn btn-control" [ngClass]="statusClass" (click)="toggle()">{{status}} </button>
-    <button type="button" class="btn btn-control" (click)="next()">Next </button>
+    <button type="button" class="btn btn-control" (click)="prev()">
+      << </button>
+        <button type="button" class="btn btn-control" [ngClass]="statusClass" (click)="toggle()">{{status}} </button>
+        <button type="button" class="btn btn-control" (click)="next()">>> </button>
   </div>
-  <!-- <p class="pull-right"> {{currentDuration}} </p> -->
   <hr>
   <div class="slidecontainer">
+    <span>{{formatTime(currentDuration)}}</span>
+    <span style="float: right">{{formatTime(maxDuration)}}</span>
     <input type="range" min="1" [max]="maxDuration" [value]="currentDuration" (input)="currentDuration = $event.target.value"
       class="slider" (change)="seekChange()" id="myRange">
   </div>
+
+  <button type="button" class="btn btn-control" (click)="submit()">Publish </button>
+  
 </form>
