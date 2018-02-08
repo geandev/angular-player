@@ -7,6 +7,7 @@
   <span class="badge badge-primary">{{music}}</span>
   <hr>
   <div class="slidecontainer">
-    <input type="range" min="1" [max]="maxDuration" [value]="currentDuration" class="slider" (change)="seekChange" id="myRange">
+    <input type="range" min="1" [max]="maxDuration" [value]="currentDuration" (input)="currentDuration = $event.target.value"
+      class="slider" (change)="seekChange()" id="myRange">
   </div>
 </form>

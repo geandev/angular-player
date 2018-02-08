@@ -7,10 +7,12 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   private sound: Howl
   private music: string
   private maxDuration: number
+
   private currentDuration: number
 
   constructor() {
@@ -25,7 +27,6 @@ export class AppComponent {
         this.maxDuration = Math.round(this.sound.duration(s))
         Observable.interval(1000).forEach(() => {
           this.currentDuration = Math.round(this.sound.seek() as number)
-          console.info(this.currentDuration)
         })
       },
     })
@@ -39,14 +40,8 @@ export class AppComponent {
     this.sound.pause();
   }
 
-  next() {
-    let valueSeek = (this.sound.seek() as number) + 20;
-    this.sound.seek(valueSeek)
-  }
-
-  previous() {
-    let valueSeek = (this.sound.seek() as number) - 20;
-    this.sound.seek(valueSeek)
+  seekChange() {
+    this.sound.seek(this.currentDuration)
   }
 
 }
