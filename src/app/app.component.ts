@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  host: { '(window:keydown)': 'hotkeys($event)' },
 })
 
 export class AppComponent {
@@ -42,17 +43,11 @@ export class AppComponent {
         this.maxDuration = Math.round(this.sound.duration(s))
         Observable.interval(1000).subscribe(() => {
           let duration = Math.round(<number>this.sound.seek())
-          console.info(duration)
           this.currentDuration = duration
           this.maxListenedDuration = duration > this.maxListenedDuration ? duration : this.maxListenedDuration
-          console.info(this.maxListenedDuration)
-          
           this.setElapsedTime()
         })
         this.setElapsedTime()
-      },
-      onseek: s => {
-        console.info(this.sound.seek())
       }
     })
   }
@@ -76,13 +71,13 @@ export class AppComponent {
     this.status = this.sound.playing() ? "Pause" : "Play"
   }
 
-  submit(){
-     if (this.pos >= this.playList.length) this.pos = -1;
+  submit() {
+    if (this.pos >= this.playList.length) this.pos = -1;
     this.pos++;
     if (this.sound.playing())
       this.sound.stop()
     this.playList(this.pos);
-    this.toggle();  
+    this.toggle();
     this.status = "Pause"
     this.sound.seek(this.currentDuration + 1)
   }
@@ -98,13 +93,21 @@ export class AppComponent {
     this.sound.seek(seekPos < 0 ? 0 : seekPos)
   }
 
-  playNext() {
+  seekChange() {
 
+    this.sound.seek(this.currentDuration > this.maxListenedDuration ? this.maxListenedDuration : this.currentDuration)
   }
 
-  seekChange() {
-    
-    this.sound.seek(this.currentDuration > this.maxListenedDuration ? this.maxListenedDuration : this.currentDuration)
+  hotkeys(event: any) {
+
+    if (event.keyCode == 32 && event.shiftKey)
+      this.toggle();
+    if (event.keyCode == 13 && event.shiftKey)
+      this.submit();
+    if (event.keyCode == 70 && event.shiftKey)
+      this.next();
+    if (event.keyCode == 82 && event.shiftKey)
+      this.prev();
   }
 
 }

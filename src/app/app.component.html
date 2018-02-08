@@ -9,10 +9,9 @@
     </small>
   </h1>
   <div class="btn-group btn-group" role="group" aria-label="Large button group">
-    <button type="button" class="btn btn-control" (click)="prev()">
-      << </button>
+    <button type="button" class="btn btn-control" (click)="prev()">RW</button>
         <button type="button" class="btn btn-control" [ngClass]="statusClass" (click)="toggle()">{{status}} </button>
-        <button type="button" class="btn btn-control" (click)="next()">>> </button>
+        <button type="button" class="btn btn-control" (click)="next()">FF</button>
   </div>
   <hr>
   <div class="slidecontainer">
@@ -23,5 +22,17 @@
   </div>
 
   <button type="button" class="btn btn-control" (click)="submit()">Publish </button>
-  
+  <p>
+      <small>
+        <p>
+          <br>
+            shortcuts:
+        </p>
+        shift + space bar: <strong>Play/Pause</strong><br>
+        shift + enter: <strong>Publish</strong><br>
+        shift + F: <strong>FF</strong><br>
+        shift + R: <strong>RW</strong><br>
+      </small>
+    </p>
 </form>
+
