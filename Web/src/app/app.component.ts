@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Howl, Howler } from 'howler';
-import { sample } from 'rxjs/operator/sample';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'my-app',
@@ -10,21 +10,43 @@ import { sample } from 'rxjs/operator/sample';
 export class AppComponent {
   private sound: Howl
   private music: string
+  private maxDuration: number
+  private currentDuration: number
 
   constructor() {
     this.music = "froid.wav"
+    this.currentDuration = 0
+    this.maxDuration = 0
     this.sound = new Howl({
-      src: [`http://localhost:5000/api/songs/${this.music}`],
+      src: [`./songs/${this.music}`],
       html5: true,
-      format: ['wav']
+      format: ['wav'],
+      onplay: s => {
+        this.maxDuration = Math.round(this.sound.duration(s))
+        Observable.interval(1000).forEach(() => {
+          this.currentDuration = Math.round(this.sound.seek() as number)
+          console.info(this.currentDuration)
+        })
+      },
     })
   }
 
-  togglePlay() {
+  play() {
     this.sound.play();
   }
 
-  stop() {
-    this.sound.pause()
+  pause() {
+    this.sound.pause();
   }
+
+  next() {
+    let valueSeek = (this.sound.seek() as number) + 20;
+    this.sound.seek(valueSeek)
+  }
+
+  previous() {
+    let valueSeek = (this.sound.seek() as number) - 20;
+    this.sound.seek(valueSeek)
+  }
+
 }

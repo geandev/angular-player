@@ -1,14 +1,12 @@
 <form class="form-signin">
   <h1 class="h3 mb-3 font-weight-normal">Player</h1>
   <div class="btn-group btn-group" role="group" aria-label="Large button group">
-    <button type="button" class="btn btn-success">Play</button>
-    <button type="button" class="btn btn-danger">Pause</button>
-    <button type="button" class="btn btn-secondary"><<</button>
-    <button type="button" class="btn btn-secondary">>></button>
+    <button type="button" class="btn btn-success" (click)="play()">Play</button>
+    <button type="button" class="btn btn-danger" (click)="pause()">Pause</button>
   </div>
-  <span class="badge badge-primary">Primary</span>
+  <span class="badge badge-primary">{{music}}</span>
   <hr>
   <div class="slidecontainer">
-    <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
+    <input type="range" min="1" [max]="maxDuration" [value]="currentDuration" class="slider" (change)="seekChange" id="myRange">
   </div>
 </form>
